@@ -1,0 +1,10 @@
+{
+    "GET": {
+        "name": "get test",
+        "message": "this is get response"
+    },
+    "POST": {
+        "name": "post test",
+        "message": "this is post response"
+    }
+}
