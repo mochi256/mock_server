@@ -20,36 +20,36 @@ class StubHttpRequestHandler(BaseHTTPRequestHandler):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+    
+    def __send(self, data, status):
+        data = json.dumps(data).encode()
+        self.send_response(status)
+        self.send_header("Content-type", "application/json; charset=UTF-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
 
     def do_GET(self):
         try:
             path = self.path
-            response = {
-                '/api': json.dumps(data['GET']).encode()
-            }[path]
-            self.send_response(HTTPStatus.OK)
+            response = data['GET'][path]
+            write_data = response['data']
+            http_status = response['status']
         except:
-            response = json.dumps({'error': 'null'}).encode()
-            self.send_response(HTTPStatus.INTERNAL_SERVER_ERROR)
-        self.send_header("Content-type", "application/json; charset=UTF-8")
-        self.send_header("Content-Length", str(len(response)))
-        self.end_headers()
-        self.wfile.write(response)
+            write_data = {'message': 'not found'}
+            http_status = 404
+        self.__send(write_data, http_status)
     
     def do_POST(self):
         try:
             path = self.path
-            response = {
-                '/api': json.dumps(data['POST']).encode()
-            }[path]
-            self.send_response(HTTPStatus.OK)
+            response = data['POST'][path]
+            write_data = response['data']
+            http_status = response['status']
         except:
-            response = json.dumps({'error': 'null'}).encode()
-            self.send_response(HTTPStatus.INTERNAL_SERVER_ERROR)
-        self.send_header("Content-type", "application/json; charset=UTF-8")
-        self.send_header("Content-Length", str(len(response)))
-        self.end_headers()
-        self.wfile.write(response)
+            write_data = {'message': 'not found'}
+            http_status = 404
+        self.__send(write_data, http_status)
 
 if __name__ == "__main__":
     print('Server Start: localhost:%s'%(PORT))

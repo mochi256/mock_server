@@ -1,10 +1,30 @@
 {
     "GET": {
-        "name": "get test",
-        "message": "this is get response"
+        "/api/v1": {
+            "status": 200,
+            "data": {
+                "name": "get test",
+                "message": "this is get response"
+            }
+        },
+        "/api/v1/500": {
+            "status": 500,
+            "data": {
+                "message": "internal server error"
+            }
+        },
+        "/api/v1/400": {
+            "status": 400,
+            "data": {
+                "message": "bad request"
+            }
+        }
     },
     "POST": {
-        "name": "post test",
-        "message": "this is post response"
+        "status": 200,
+        "data": {
+            "name": "post test",
+            "message": "this is post response"
+        }
     }
 }
