@@ -3,8 +3,15 @@
         "/api/v1": {
             "status": 200,
             "data": {
-                "name": "get test",
+                "title": "get test",
                 "message": "this is get response"
+            }
+        },
+        "/api/v1/user/id1234": {
+            "status": 200,
+            "data": {
+                "id": "id1234",
+                "name": "test user"
             }
         },
         "/api/v1/500": {
@@ -23,7 +30,7 @@
     "POST": {
         "status": 200,
         "data": {
-            "name": "post test",
+            "title": "post test",
             "message": "this is post response"
         }
     }
