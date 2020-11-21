@@ -14,6 +14,12 @@
                 "name": "test user"
             }
         },
+        "/api/v1/info/id1234": {
+            "status": 200,
+            "data": {
+                "message": "info test"
+            }
+        },
         "/api/v1/500": {
             "status": 500,
             "data": {
