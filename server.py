@@ -24,10 +24,26 @@ class StubHttpRequestHandler(BaseHTTPRequestHandler):
     def __send(self, data, status):
         data = json.dumps(data).encode()
         self.send_response(status)
-        self.send_header("Content-type", "application/json; charset=UTF-8")
+        # specify json for content-type violate 
+        # the cors policy, use text
+        self.send_header("Content-type", "text/plain; charset=UTF-8")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Request-Headers", "Content-Type")
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
+    
+    def do_OPTIONS(self):
+        try:
+            path = self.path
+            response = data['GET'][path]
+            write_data = response['data']
+            http_status = response['status']
+        except:
+            write_data = {'message': 'not found'}
+            http_status = 404
+        self.__send(write_data, http_status)
 
     def do_GET(self):
         try:
